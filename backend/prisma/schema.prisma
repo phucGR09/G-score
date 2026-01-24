@@ -1,0 +1,31 @@
+// Prisma schema for G-Scores database
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Student {
+  id           Int       @id @default(autoincrement())
+  sbd          String    @unique
+  fullName     String?   @map("full_name")
+  toan         Float?
+  vat_li       Float?    @map("vat_li")
+  hoa_hoc      Float?    @map("hoa_hoc")
+  sinh_hoc     Float?    @map("sinh_hoc")
+  ngu_van      Float?    @map("ngu_van")
+  ngoai_ngu    Float?    @map("ngoai_ngu")
+  ma_ngoai_ngu String?   @map("ma_ngoai_ngu")
+  lich_su      Float?    @map("lich_su")
+  dia_li       Float?    @map("dia_li")
+  gdcd         Float?
+  createdAt    DateTime  @default(now()) @map("created_at")
+  updatedAt    DateTime  @updatedAt @map("updated_at")
+
+  @@map("students")
+}
+  
