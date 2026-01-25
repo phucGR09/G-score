@@ -37,3 +37,13 @@ export const getTopStudents = asyncHandler(
     );
   }
 );
+
+export const getCountScores = asyncHandler(
+  async (req: Request, res: Response, next: NextFunction) => {
+    const countScores = await statisticsService.getScoreCountsByRange();
+
+    res.status(200).json(
+      new ApiResponse(200, countScores, 'Score counts retrieved successfully')
+    );
+  }
+);

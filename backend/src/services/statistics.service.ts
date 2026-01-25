@@ -17,6 +17,10 @@ interface SubjectStatistics {
   [subject: string]: ScoreLevelStatistics;
 }
 
+interface ScoreCountData {
+  [subject: string]: number[];
+}
+
 export class StatisticsService {
   constructor(private repository: StatisticsRepository = new StatisticsRepository()) {}
 
@@ -68,5 +72,22 @@ export class StatisticsService {
 
   getGroupA(): GroupA {
     return new GroupA();
+  }
+
+  async getScoreCountsByRange(): Promise<ScoreCountData> {
+    const results = await this.repository.getScoreCountsByRange();
+
+    const scoreCounts: ScoreCountData = {};
+    
+    for (const row of results) {
+      if (!scoreCounts[row.subject]) {
+        scoreCounts[row.subject] = new Array(11).fill(0);
+      }
+      
+      // row.score_range is 0-10, use it as array index
+      scoreCounts[row.subject][row.score_range] = Number(row.count);
+    }
+
+    return scoreCounts;
   }
 }

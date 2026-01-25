@@ -25,6 +25,12 @@ export interface TopStudentRow {
   total: number;
 }
 
+export interface ScoreCountRow {
+  subject: string;
+  score_range: number;
+  count: bigint;
+}
+
 export class StatisticsRepository {
   async getSubjectStatistics(): Promise<SubjectStatsRow[]> {
     return await prisma.$queryRaw<SubjectStatsRow[]>`
@@ -108,6 +114,48 @@ export class StatisticsRepository {
         AND hoa_hoc IS NOT NULL
       ORDER BY total DESC
       LIMIT ${limit}
+    `;
+  }
+
+  async getScoreCountsByRange(): Promise<ScoreCountRow[]> {
+    return await prisma.$queryRaw<ScoreCountRow[]>`
+      WITH score_ranges AS (
+        SELECT generate_series(0, 10) as score_range
+      ),
+      subject_scores AS (
+        SELECT 'toan' as subject, toan as score FROM students WHERE toan IS NOT NULL
+        UNION ALL
+        SELECT 'ngu_van' as subject, ngu_van as score FROM students WHERE ngu_van IS NOT NULL
+        UNION ALL
+        SELECT 'vat_li' as subject, vat_li as score FROM students WHERE vat_li IS NOT NULL
+        UNION ALL
+        SELECT 'hoa_hoc' as subject, hoa_hoc as score FROM students WHERE hoa_hoc IS NOT NULL
+        UNION ALL
+        SELECT 'sinh_hoc' as subject, sinh_hoc as score FROM students WHERE sinh_hoc IS NOT NULL
+        UNION ALL
+        SELECT 'ngoai_ngu' as subject, ngoai_ngu as score FROM students WHERE ngoai_ngu IS NOT NULL
+        UNION ALL
+        SELECT 'lich_su' as subject, lich_su as score FROM students WHERE lich_su IS NOT NULL
+        UNION ALL
+        SELECT 'dia_li' as subject, dia_li as score FROM students WHERE dia_li IS NOT NULL
+        UNION ALL
+        SELECT 'gdcd' as subject, gdcd as score FROM students WHERE gdcd IS NOT NULL
+      )
+      SELECT 
+        ss.subject,
+        sr.score_range,
+        COUNT(CASE 
+          WHEN sr.score_range = 10 THEN 
+            CASE WHEN ss.score = 10 THEN 1 END
+          ELSE 
+            CASE WHEN ss.score >= sr.score_range AND ss.score < sr.score_range + 1 THEN 1 END
+        END) as count
+      FROM 
+        (SELECT DISTINCT subject FROM subject_scores) subjects
+      CROSS JOIN score_ranges sr
+      LEFT JOIN subject_scores ss ON subjects.subject = ss.subject
+      GROUP BY ss.subject, sr.score_range
+      ORDER BY ss.subject, sr.score_range
     `;
   }
 }
