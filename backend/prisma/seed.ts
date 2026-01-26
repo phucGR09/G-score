@@ -107,7 +107,7 @@ async function calculateStatistics() {
 
 async function main() {
 
-  const csvPath = path.join(__dirname, '../../dataset/diem_thi_thpt_2024.csv');
+  const csvPath = path.join(__dirname, '../dataset/diem_thi_thpt_2024.csv');
 
   if (!fs.existsSync(csvPath)) {
     console.error(`CSV file not found at: ${csvPath}`);
