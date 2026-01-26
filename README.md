@@ -1,6 +1,6 @@
-# G-Scores - Tra cứu điểm thi THPT 2024
+# G-Scores - Tra cứu điểm thi THPT
 
-## 🔗 Link Demo
+## Link Demo
 ```
 https://your-deployment-url.com
 ```
@@ -17,6 +17,7 @@ Ngoài ra, các chức năng khác được thêm để hoàn thiện dashboard:
 - Thống kê điểm theo thang [0, 10]
 
 Frontend sử dụng template từ [TailAdmin](https://tailadmin.com/) 
+
 Backend lấy template từ [dpvasani](https://github.com/dpvasani/Backend-Template-TypeScript) thiết kế theo mô hình OOP với các patterns như Factory, Strategy để quản lý việc tính điểm các tổ hợp môn.
 
 Cảm ơn team Golden Owl đã tạo ra một assignment thú vị và đầy thực tế :D
