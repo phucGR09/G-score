@@ -2,6 +2,7 @@
 
 generator client {
   provider = "prisma-client-js"
+  binaryTargets = ["native", "linux-musl-openssl-3.0.x"]
 }
 
 datasource db {
@@ -27,5 +28,38 @@ model Student {
   updatedAt    DateTime  @updatedAt @map("updated_at")
 
   @@map("students")
+}
+
+model StatisticsSummary {
+  id        Int      @id @default(autoincrement())
+  subject   String
+  level     String
+  count     Int
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@unique([subject, level])
+  @@index([subject])
+  @@map("statistics_summary")
+}
+
+model ScoreRangeSummary {
+  id         Int      @id @default(autoincrement())
+  subject    String
+  scoreRange Int      @map("score_range")
+  count      Int
+  updatedAt  DateTime @updatedAt @map("updated_at")
+
+  @@unique([subject, scoreRange])
+  @@index([subject])
+  @@map("score_range_summary")
+}
+
+model CountStudent {
+  id              Int      @id @default(autoincrement())
+  totalStudents   Int      @map("total_students")
+  invalidStudents Int      @map("invalid_students")
+  updatedAt       DateTime @updatedAt @map("updated_at")
+
+  @@map("count_student")
 }
   

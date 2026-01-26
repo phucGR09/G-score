@@ -3,6 +3,8 @@ FROM node:18-alpine AS builder
 
 WORKDIR /app
 
+RUN apk add --no-cache openssl libc6-compat
+
 # Copy package files
 COPY package*.json ./
 COPY prisma ./prisma/
@@ -18,11 +20,14 @@ RUN npx prisma generate
 
 # Build TypeScript
 RUN npm run build
+RUN npm run build:seed
 
 # Production stage
 FROM node:18-alpine
 
 WORKDIR /app
+
+RUN apk add --no-cache openssl libc6-compat
 
 # Copy package files
 COPY package*.json ./

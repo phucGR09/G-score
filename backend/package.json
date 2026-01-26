@@ -5,16 +5,17 @@
   "scripts": {
     "dev": "nodemon src/index.ts",
     "build": "tsc",
+    "build:seed": "tsc prisma/seed.ts --outDir dist/prisma --skipLibCheck --moduleResolution node --esModuleInterop true",
     "start": "node dist/index.js",
     "prisma:generate": "prisma generate",
     "prisma:migrate": "prisma migrate dev",
     "prisma:deploy": "prisma migrate deploy",
-    "prisma:seed": "ts-node prisma/seed.ts",
+    "prisma:seed": "node dist/prisma/seed.js",
     "prisma:studio": "prisma studio",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "prisma": {
-    "seed": "ts-node prisma/seed.ts"
+    "seed": "node dist/prisma/seed.js"
   },
   "author": "Darshan Vasani",
   "license": "ISC",
@@ -42,6 +43,7 @@
     "csv-parse": "^5.5.0",
     "dotenv": "^16.4.7",
     "express": "^4.21.2",
+    "redis": "^4.6.0",
     "zod": "^3.22.0"
   }
 }

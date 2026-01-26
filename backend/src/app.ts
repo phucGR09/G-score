@@ -24,7 +24,7 @@ app.get("/health", (req: Request, res: Response) => {
 
 // Import Routes
 import scoreRouter from "./routes/score.routes";
-import { statisticsRouter, topStudentsRouter, countScoresRouter } from "./routes/statistics.routes";
+import { statisticsRouter, topStudentsRouter, countScoresRouter, countStudentRouter } from "./routes/statistics.routes";
 
 // Import Middlewares
 import { errorHandler, notFoundHandler } from "./middlewares/error.middleware";
@@ -34,6 +34,7 @@ app.use("/api/v1/scores", scoreRouter);
 app.use("/api/v1/statistics", statisticsRouter);
 app.use("/api/v1/top-students", topStudentsRouter);
 app.use("/api/v1/count-scores", countScoresRouter);
+app.use("/api/v1/count-student", countStudentRouter);
 
 // Error handling - must be last
 app.use(notFoundHandler);

@@ -1,6 +1,5 @@
-import { PrismaClient, Student } from '@prisma/client';
-
-const prisma = new PrismaClient();
+import { Student } from '@prisma/client';
+import prisma from '../config/database';
 
 export class ScoreRepository {
   async findByRegistrationNumber(sbd: string): Promise<Student | null> {

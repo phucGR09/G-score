@@ -47,3 +47,13 @@ export const getCountScores = asyncHandler(
     );
   }
 );
+
+export const getCountStudent = asyncHandler(
+  async (req: Request, res: Response, next: NextFunction) => {
+    const countStudent = await statisticsService.getCountStudent();
+
+    res.status(200).json(
+      new ApiResponse(200, countStudent, 'Student count retrieved successfully')
+    );
+  }
+);
