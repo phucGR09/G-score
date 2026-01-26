@@ -42,8 +42,17 @@ RUN npx prisma generate
 # Copy built files from builder
 COPY --from=builder /app/dist ./dist
 
+# Copy dataset for seeding
+COPY dataset ./dataset
+
 # Expose port
 EXPOSE 4000
 
+# Create startup script that runs migration then starts app
+RUN echo '#!/bin/sh' > /app/start.sh && \
+    echo 'npx prisma migrate deploy' >> /app/start.sh && \
+    echo 'npm start' >> /app/start.sh && \
+    chmod +x /app/start.sh
+
 # Start command
-CMD ["npm", "start"]
+CMD ["/bin/sh", "/app/start.sh"]
