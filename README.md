@@ -179,3 +179,15 @@ Dữ liệu sẽ tự động được import vào database khi chạy lệnh se
 - `GET /api/statistics/top-students` - Top 10 thí sinh khối A
 
 ---
+
+
+# Architecture
+
+## Client-Server Flow
+![Client-Server Architecture](./client-server.png)
+
+## Database Migration Flow
+![Prisma Migration Process](./prisma-migrate.png)
+
+## Seed & Initialization Flow
+![Seed Initialization](./seed-init.png)
