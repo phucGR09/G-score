@@ -5,6 +5,11 @@
 https://youtu.be/9WlxBOgvZsM
 ```
 
+## Link web
+```
+https://gscores-frontend-zzwq.onrender.com/
+```
+
 ## Giới thiệu
 
 Project được xây dựng với mục tiêu:
